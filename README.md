@@ -1,5 +1,5 @@
 # RowindCSS
-A TailwindCSS-like UI abstraction for Roact & Roblox-ts.
+TailwindCSS classes for Roact & Roblox-ts.
 
 ## Getting Started
 Import the Div component and start using it in Roact with Tailwind classes.
