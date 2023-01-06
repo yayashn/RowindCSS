@@ -92,7 +92,7 @@ export const Div = (props: Props) => {
             ? (hasItemsCenter ? Enum.HorizontalAlignment.Center : hasJustifyEnd ? Enum.HorizontalAlignment.Left : Enum.HorizontalAlignment.Right)
             : (hasJustifyCenter ? Enum.HorizontalAlignment.Center : hasJustifyEnd ? Enum.HorizontalAlignment.Right : Enum.HorizontalAlignment.Left),
             VerticalAlignment: hasFlexCol
-            ? (hasJustifyCenter ? Enum.VerticalAlignment.Center : hasJustifyEnd ? Enum.VerticalAlignment.Bottom : Enum.VerticalAlignment.Top)
+            ? (hasJustifyCenter ? Enum.VerticalAlignment.Center : hasJustifyEnd ? Enum.VerticalAlignment.Top : Enum.VerticalAlignment.Bottom)
             : (hasItemsCenter ? Enum.VerticalAlignment.Center : hasItemsEnd ? Enum.VerticalAlignment.Bottom : Enum.VerticalAlignment.Top),
         }
 
