@@ -1,0 +1,8 @@
+{
+  "name": "rowindcss",
+  "version": "0.0.1",
+  "description": "TailwindCSS-like UI abstraction for Roact & Roblox-ts.",
+  "main": "index.tsx",
+  "author": "yayashn",
+  "license": "ISC"
+}
