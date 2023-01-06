@@ -26,6 +26,7 @@ export const Div = (props: Props) => {
     const hasRounded = getClass(classList, "rounded") !== undefined
     const hasBorder = getClass(classList, "border") !== undefined
     const hasBgTransparent = classList.includes("bg-transparent")
+    const hasBgColor = getBgColorClass(classList) !== undefined
     const hasP = getClass(classList, "p") !== undefined || getClass(classList, "py") !== undefined || getClass(classList, "px") !== undefined || getClass(classList, "pt") !== undefined || getClass(classList, "pr") !== undefined || getClass(classList, "pb") !== undefined || getClass(classList, "pl") !== undefined
     const wVal = w[getClass(classList, "w") as keyof typeof w || "w-20"]
     const hVal = h[getClass(classList, "h") as keyof typeof h || "h-20"]
@@ -41,7 +42,7 @@ export const Div = (props: Props) => {
         Visible: true,
         AnchorPoint: originVal,
         BackgroundColor3: bgColorVal,
-        BackgroundTransparency: hasBgTransparent ? 1 : 0,
+        BackgroundTransparency: (hasBgTransparent || !hasBgColor) ? 1 : 0,
     }
 
     const Border = () => {
