@@ -3,3 +3,4 @@
 /include
 *.tsbuildinfo
 yarn.lock
+test
