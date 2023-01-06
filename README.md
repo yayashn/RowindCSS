@@ -2,6 +2,15 @@
 TailwindCSS classes for Roact & Roblox-ts.
 
 ## Getting Started
+Install using:
+```bash
+yarn add rowindcss
+```
+or
+```bash
+npm i rowindcss
+```
+
 Import the Div component and start using it in Roact with Tailwind classes.
 ```tsx
     import { Div } from 'rowindcss'
