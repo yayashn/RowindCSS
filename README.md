@@ -11,6 +11,26 @@ or
 npm i rowindcss
 ```
 
+Install Tailwind configs in your project root for autocomplete
+```bash
+npx tailwindcss init
+```
+
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.tsx",
+    "./src/**/**/*.tsx",
+    "./src/**/**/**/*.tsx"
+],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
 Import the Div component and start using it in Roact with Tailwind classes.
 ```tsx
     import { Div } from 'rowindcss'
