@@ -32,7 +32,7 @@ export const Div = (props: Props) => {
     const topVal = top[getClass(classList, "top") as keyof typeof top || "top-0"]
     const leftVal = left[getClass(classList, "left") as keyof typeof left || "left-0"]
     const bgColorVal = bgColor[getBgColorClass(classList) as keyof typeof bgColor || "bg-white"]
-    const originVal = origin[getClass(classList, "origin") as keyof typeof origin || "origin-left"]
+    const originVal = origin[getClass(classList, "origin") as keyof typeof origin || "origin-top-left"]
 
     const div = {
         BorderSizePixel: 0,
