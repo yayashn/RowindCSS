@@ -1,5 +1,5 @@
 import Roact from "@rbxts/roact"
-import { getClass, includes, getBgColorClass, getBorderColorClass, formatClass } from "./utils"
+import { getClass, getBgColorClass, getBorderColorClass, formatClass } from "./utils"
 import { h } from "./classes/h"
 import { rounded } from "./classes/rounded"
 import { w } from "./classes/w"
@@ -11,6 +11,7 @@ import { borderOpacity } from "./classes/border-opacity"
 import { borderColor } from "./classes/border-color"
 import { bgColor } from "./classes/bg-color"
 import { gap } from "./classes/gap"
+import { origin } from "./classes/origin"
 
 interface Props extends Roact.PropsWithChildren {
     className?: string
@@ -24,20 +25,23 @@ export const Div = (props: Props) => {
     const hasOverflowY = classList.includes("overflow-y")
     const hasRounded = getClass(classList, "rounded") !== undefined
     const hasBorder = getClass(classList, "border") !== undefined
+    const hasBgTransparent = classList.includes("bg-transparent")
     const hasP = getClass(classList, "p") !== undefined || getClass(classList, "py") !== undefined || getClass(classList, "px") !== undefined || getClass(classList, "pt") !== undefined || getClass(classList, "pr") !== undefined || getClass(classList, "pb") !== undefined || getClass(classList, "pl") !== undefined
     const wVal = w[getClass(classList, "w") as keyof typeof w || "w-20"]
     const hVal = h[getClass(classList, "h") as keyof typeof h || "h-20"]
     const topVal = top[getClass(classList, "top") as keyof typeof top || "top-0"]
     const leftVal = left[getClass(classList, "left") as keyof typeof left || "left-0"]
     const bgColorVal = bgColor[getBgColorClass(classList) as keyof typeof bgColor || "bg-white"]
+    const originVal = origin[getClass(classList, "origin") as keyof typeof origin || "origin-left"]
 
     const div = {
         BorderSizePixel: 0,
         Size: new UDim2(wVal, hVal),
         Position: new UDim2(topVal, leftVal),
         Visible: true,
-        AnchorPoint: new Vector2(0.5, 0.5),
+        AnchorPoint: originVal,
         BackgroundColor3: bgColorVal,
+        BackgroundTransparency: hasBgTransparent ? 1 : 0,
     }
 
     const Border = () => {
