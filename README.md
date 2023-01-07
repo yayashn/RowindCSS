@@ -4,11 +4,11 @@ TailwindCSS classes for Roact & Roblox-ts.
 ## Getting Started
 Install using:
 ```bash
-yarn add rowindcss
+yarn add @rbxts/rowindcss
 ```
 or
 ```bash
-npm i rowindcss
+npm i @rbxts/rowindcss
 ```
 
 Install Tailwind configs in your project root for autocomplete
@@ -33,7 +33,7 @@ module.exports = {
 
 Import the Div component and start using it in Roact with Tailwind classes.
 ```tsx
-    import { Div } from 'rowindcss'
+    import { Div } from '@rbxts/rowindcss'
 
     export const Test = () => {
         return (
