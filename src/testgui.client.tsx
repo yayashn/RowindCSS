@@ -13,5 +13,3 @@ export const Test = () => {
         </screengui>        
     )
 }
-
-Roact.mount(<Test/>, game.GetService("Players").LocalPlayer.WaitForChild("PlayerGui"), "testgui")

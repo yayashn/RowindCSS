@@ -1,3 +1,5 @@
+export type P = "p" | "pb" | "pl" | "pt" | "pr";
+
 export const p = {
     "p-0": new UDim(0, 0),
     "p-px": new UDim(0, 1),
