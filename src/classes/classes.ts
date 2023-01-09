@@ -14,6 +14,8 @@ import { rounded } from "./rounded";
 import { text } from "./text";
 import { top } from "./top";
 import { w } from "./w";
+import { textColor } from "./text-color";
+import { z } from "./z";
 
 export const classes = {
     bgColor,
@@ -36,4 +38,6 @@ export const classes = {
     text,
     top,
     w,
+    textColor,
+    z
 }

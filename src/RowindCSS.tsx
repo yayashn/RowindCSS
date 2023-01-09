@@ -1,8 +1,8 @@
 import Roact from "@rbxts/roact"
-import { formatClass } from "./utils"
+import { formatClass, getArbitraryValue } from "./utils"
 import { P } from "./classes/p"
 import useBreakpoints from "./hooks/useBreakpoints"
-import { useEffect, withHooks } from "@rbxts/roact-hooked"
+import { withHooks } from "@rbxts/roact-hooked"
 import { classes } from "./classes/classes"
 import Object from "@rbxts/object-utils"
 
@@ -55,24 +55,50 @@ export const Rowind = withHooks((props: RowindProps) => {
 
     const getClass = (classList: string[], classType: RowindClassType) => {
         let breakpoint: Breakpoint = "" as unknown as Breakpoint;
- 
-        const c = classList.find((className) => {
+        let value: unknown = undefined;
+
+        let c = classList.find((className) => {
             const prefix = Object.keys(breakpoints).find((bp) => className.match(`${bp}:`).size() > 0);
             if (prefix) {
                 const split = className.split(":");
                 className = split[1];
                 breakpoint = split[0] as unknown as Breakpoint;
             }
+        
             const classTypeNames = Object.keys(classes[classType]) as string[];
             return classTypeNames.some((name) => name === className);
         });
-    
+
+        if(c === undefined) {
+            c = classList.find((className) => {
+                const prefix = Object.keys(breakpoints).find((bp) => className.match(`${bp}:`).size() > 0);
+                if (prefix) {
+                    const split = className.split(":");
+                    className = split[1];
+                    breakpoint = split[0] as unknown as Breakpoint;
+                }
+                
+                switch(classType) {
+                    case "textColor":
+                        const textClassList = classList.filter(cn => cn.match("text").size() > 0)
+                        const textColour = textClassList.find(cn => ["#", "rgb", "hsl"].some(e => cn.match(e).size() > 0))
+                        if(textColour) {
+                            value = getArbitraryValue(textColour);
+                            return true
+                        }
+                    default:
+                        return false
+                }
+            })
+        }
+
         return {
             className: c,
-            classValue: ((classes[classType]) as unknown as Record<string, unknown>)[c as string],
+            classValue: value || ((classes[classType]) as unknown as Record<string, unknown>)[c as string],
             breakpoint
         }
     }
+
 
     const hasClass = (classType: RowindClassType) => {
         return getClass(classList, classType).className !== undefined
@@ -92,7 +118,14 @@ export const Rowind = withHooks((props: RowindProps) => {
     }
 
     const useSpecialClassValue = (classNames: RowindSpecialClass[]) => {
-        const specialClasses = classList.filter(c => classNames.some(f => c === f))
+        const specialClasses = classList.filter(c => classNames.some(f => {
+            if(c.match(":").size() > 0) {
+                const className = c.split(":")[1]
+                return className === f
+            } else {
+                return c === f
+            }
+        }))
         for(const bp of activeBreakpoints) {
             const specialClassesWithBp = specialClasses
                 .filter(c => c.match(`${bp}${bp !== "" ? ':' : ""}`).size() > 0)
@@ -101,13 +134,14 @@ export const Rowind = withHooks((props: RowindProps) => {
                 return specialClassesWithBpFormatted[0]
             }
         }
+        return undefined
     }
 
-    const hasFlex = classList.includes("flex")
-    const hasBgTransparent = classList.includes("bg-transparent")
-    const hasOverflow = classList.includes("overflow")
-    const hasHAuto = classList.includes("h-auto")
-    const hasWAuto = classList.includes("w-auto")
+    const hasFlex = useSpecialClassValue(["flex"]) === "flex"
+    const hasBgTransparent = useSpecialClassValue(["bg-transparent"]) === "bg-transparent"
+    const hasOverflow = useSpecialClassValue(["overflow"]) === "overflow"
+    const hasHAuto = useSpecialClassValue(["h-auto"]) === "h-auto"
+    const hasWAuto = useSpecialClassValue(["w-auto"]) === "w-auto"
     const hasP = (["p", "pt", "pb", "pr", "pl"] as P[]).some((p) => hasClass(p))
     const wVal = useClassValue("w") as UDim
     const hVal = useClassValue("h") as UDim
@@ -132,6 +166,7 @@ export const Rowind = withHooks((props: RowindProps) => {
         BackgroundColor3: bgColorVal,
         BackgroundTransparency: (hasBgTransparent || !hasClass("bgColor")) ? 1 : 0,
         AutomaticSize: (hasWAuto && hasHAuto) ? Enum.AutomaticSize.XY : hasWAuto ? Enum.AutomaticSize.X : hasHAuto ? Enum.AutomaticSize.Y : Enum.AutomaticSize.None,
+        ZIndex: useClassValue("z") as number || 0,
     }
 
     if(props.tagName === "text" || props.tagName === "button") {
@@ -142,6 +177,10 @@ export const Rowind = withHooks((props: RowindProps) => {
             FontFace: new Font("Arial", props.tagName !== "button" ? fontWeightVal : fontWeightVal === Enum.FontWeight.Regular ? Enum.FontWeight.Regular : Enum.FontWeight.Bold),
             BorderSizePixel: useClassValue("border") as number || 0,
             BorderColor3: useClassValue("borderColor") as Color3 || new Color3(0, 0, 0),
+            TextColor3: useClassValue("textColor") as Color3 || new Color3(0, 0, 0)
+        }
+        if(classList.includes("text-[#FF0000]")) {
+            print(getClass(classList, "textColor"))
         }
     }
 
@@ -165,11 +204,11 @@ export const Rowind = withHooks((props: RowindProps) => {
     }
 
     const Padding = () => {
-        const pVal = getClass(classList, "p").classValue as UDim
-        const pbVal = getClass(classList, "pb").classValue as UDim
-        const ptVal = getClass(classList, "pt").classValue as UDim
-        const prVal = getClass(classList, "pr").classValue as UDim
-        const plVal = getClass(classList, "pl").classValue as UDim
+        const pVal = useClassValue("p") as UDim
+        const pbVal = useClassValue("pb") as UDim
+        const ptVal = useClassValue("pt") as UDim
+        const prVal = useClassValue("pr") as UDim
+        const plVal = useClassValue("pl") as UDim
 
         const paddingProps = {
             PaddingBottom: pbVal || pVal,
@@ -182,20 +221,43 @@ export const Rowind = withHooks((props: RowindProps) => {
 
     const Flex = () => {
         const hasFlexCol = useSpecialClassValue(["flex-col", "flex-row"]) === "flex-col"
+        const hasFlexRow = !hasFlexCol
         const hasJustifyCenter = useSpecialClassValue(["justify-center", "justify-end", "justify-start"]) === "justify-center"
         const hasJustifyEnd = useSpecialClassValue(["justify-center", "justify-end", "justify-start"]) === "justify-end"
         const hasItemsCenter = useSpecialClassValue(["items-center", "items-end", "items-start"]) === "items-center"
         const hasItemsEnd = useSpecialClassValue(["items-center", "items-end", "items-start"]) === "items-end"
 
-        const flex = {
+        let flex: any = {
             FillDirection: hasFlexCol ? Enum.FillDirection.Vertical : Enum.FillDirection.Horizontal,
             Padding: useClassValue("gap") as UDim || new UDim(0, 0),
-            HorizontalAlignment: hasFlexCol 
-            ? (hasItemsCenter ? Enum.HorizontalAlignment.Center : hasJustifyEnd ? Enum.HorizontalAlignment.Left : Enum.HorizontalAlignment.Right)
-            : (hasJustifyCenter ? Enum.HorizontalAlignment.Center : hasJustifyEnd ? Enum.HorizontalAlignment.Right : Enum.HorizontalAlignment.Left),
-            VerticalAlignment: hasFlexCol
-            ? (hasJustifyCenter ? Enum.VerticalAlignment.Center : hasJustifyEnd ? Enum.VerticalAlignment.Top : Enum.VerticalAlignment.Bottom)
-            : (hasItemsCenter ? Enum.VerticalAlignment.Center : hasItemsEnd ? Enum.VerticalAlignment.Bottom : Enum.VerticalAlignment.Top),
+        }
+
+        if(hasFlexRow) {
+            if(hasJustifyCenter) {
+                flex.HorizontalAlignment = Enum.HorizontalAlignment.Center
+            }
+            if(hasJustifyEnd) {
+                flex.HorizontalAlignment = Enum.HorizontalAlignment.Right
+            }
+            if(hasItemsCenter) {
+                flex.VerticalAlignment = Enum.VerticalAlignment.Center
+            }
+            if(hasItemsEnd) {
+                flex.VerticalAlignment = Enum.VerticalAlignment.Bottom
+            }
+        } else if(hasFlexCol) {
+            if(hasJustifyCenter) {
+                flex.VerticalAlignment = Enum.VerticalAlignment.Center
+            }
+            if(hasJustifyEnd) {
+                flex.VerticalAlignment = Enum.VerticalAlignment.Bottom
+            }
+            if(hasItemsCenter) {
+                flex.HorizontalAlignment = Enum.HorizontalAlignment.Center
+            }
+            if(hasItemsEnd) {
+                flex.HorizontalAlignment = Enum.HorizontalAlignment.Right
+            }
         }
 
         return <uilistlayout {...flex} />
