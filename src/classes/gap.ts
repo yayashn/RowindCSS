@@ -1,3 +1,5 @@
+export const gapArbPattern = "gap%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+
 export const gap = {
     "gap-0": new UDim(0, 0),
     "gap-px": new UDim(0, 1),

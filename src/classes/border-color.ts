@@ -1,3 +1,6 @@
+export const borderColorArbPattern = "border%-%[(#%x%x%x%x%x%x|rgb%(%d+,%d+,%d+%)|hsv%(%d+,%d+,%d+%))]";
+export const borderColorPattern = "border%-[a-z]+%-[0-9]+";
+
 export const borderColor = {
     "border-black": Color3.fromHex("#000000"),
     "border-white": Color3.fromHex("#ffffff"),

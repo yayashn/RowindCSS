@@ -1,3 +1,5 @@
+export const textArbPattern = "text%-%[[0-9]%d*]"
+
 export const text = {
     "text-xs": 12,
     "text-sm": 14,

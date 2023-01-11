@@ -1,3 +1,5 @@
+export const rightArbPattern = "right%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+
 export const right = {
     "right-0": new UDim(1, 0),
     "right-px": new UDim(1, -1),

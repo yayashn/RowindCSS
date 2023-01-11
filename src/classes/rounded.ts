@@ -1,3 +1,5 @@
+export const roundedArbPattern = "rounded%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+
 export const rounded = {
     "rounded-none": new UDim(0, 0),
     "rounded-sm": new UDim(0, 2),

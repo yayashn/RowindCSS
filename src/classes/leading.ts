@@ -1,3 +1,5 @@
+export const leadingArbPattern = "leading%-%[[0-9]%d*]"
+
 export const leading = {
     "leading-3": 12,
     "leading-4": 16,

@@ -1,3 +1,5 @@
+export const topArbPattern = "top%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+
 export const top = {
     "top-0": new UDim(0, 0),
     "top-px": new UDim(0, 1),

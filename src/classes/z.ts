@@ -1,3 +1,5 @@
+export const zArbPattern = "border%-%[[0-9]%d*]"
+
 export const z = {
     "z-0": 0,
     "z-10": 10,

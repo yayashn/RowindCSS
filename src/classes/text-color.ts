@@ -1,3 +1,5 @@
+export const textColorArbPattern = "text%-%[(#%x%x%x%x%x%x|rgb%((%d%d?%d?),(%d%d?%d?),(%d%d?%d?)%)|hsv%((%d%d?%d?),(%d%d?%d?),(%d%d?%d?)%)%)%]"
+
 export const textColor = {
     "text-black": Color3.fromHex("#000000"),
     "text-white": Color3.fromHex("#ffffff"),

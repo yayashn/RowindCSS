@@ -8,7 +8,7 @@ import { gap } from "./gap";
 import { h } from "./h";
 import { leading } from "./leading";
 import { left } from "./left";
-import { p, pb, pl, pt, pr } from "./p";
+import { p, pb, pl, pt, pr, px, py } from "./p";
 import { right } from "./right";
 import { rounded } from "./rounded";
 import { text } from "./text";
@@ -33,6 +33,8 @@ export const classes = {
     pl,
     pt,
     pr,
+    px,
+    py,
     right,
     rounded,
     text,

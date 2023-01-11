@@ -1,3 +1,5 @@
+export const hArbPattern = "h%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+
 export const h = {
     "h-0": new UDim(0, 0),
     "h-px": new UDim(0, 1),

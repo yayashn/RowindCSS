@@ -1,3 +1,6 @@
+export const borderOpacityArbPattern = "border%-opacity%-[0%.?%d*]"
+export const borderOpacityPattern = "border%-opacity%-[0-9]+"
+
 export const borderOpacity = {
     "border-opacity-0": 0,
     "border-opacity-5": 0.05,

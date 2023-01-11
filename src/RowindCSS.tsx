@@ -57,6 +57,7 @@ export const Rowind = withHooks((props: RowindProps) => {
         let breakpoint: Breakpoint = "" as unknown as Breakpoint;
         let value: unknown = undefined;
 
+        // Normal Value Checker
         let c = classList.find((className) => {
             const prefix = Object.keys(breakpoints).find((bp) => className.match(`${bp}:`).size() > 0);
             if (prefix) {
@@ -69,6 +70,7 @@ export const Rowind = withHooks((props: RowindProps) => {
             return classTypeNames.some((name) => name === className);
         });
 
+        // Arbitrary Value Checker
         if(c === undefined) {
             c = classList.find((className) => {
                 const prefix = Object.keys(breakpoints).find((bp) => className.match(`${bp}:`).size() > 0);
@@ -77,18 +79,156 @@ export const Rowind = withHooks((props: RowindProps) => {
                     className = split[1];
                     breakpoint = split[0] as unknown as Breakpoint;
                 }
-                
-                switch(classType) {
-                    case "textColor":
-                        const textClassList = classList.filter(cn => cn.match("text").size() > 0)
-                        const textColour = textClassList.find(cn => ["#", "rgb", "hsl"].some(e => cn.match(e).size() > 0))
-                        if(textColour) {
-                            value = getArbitraryValue(textColour);
+
+                let abitraryClasses = ({
+                    textColor: () => {
+                        const c = classList.find(cn => 
+                            ["#", "rgb", "hsl"].some(e => cn.match(`${'^text%-%['}${e}`).size() > 0)
+                        )
+                        if(c) {
+                            value = getArbitraryValue(c);
                             return true
                         }
-                    default:
-                        return false
-                }
+                    },
+                    bgColor: () => {
+                        const c = classList.find(cn => 
+                            ["#", "rgb", "hsl"].some(e => cn.match(`${'^bg%-%['}${e}`).size() > 0)
+                        )
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    borderColor: () => {
+                        const c = classList.find(cn => 
+                            ["#", "rgb", "hsl"].some(e => cn.match(`${'^border%-%['}${e}`).size() > 0)
+                        )
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    borderOpacity: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^border-opacity%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    border: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^border%-%[").size() > 0 && !["#", "rgb", "hsl"].some(e => cn.match(`${'^border%-%['}${e}`).size() > 0)
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    gap: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^gap%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    h: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^h%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    leading: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^leading%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    left: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^left%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    p: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^p%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    right: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^right%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    rounded: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^rounded%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    text: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^text%-%[").size() > 0 && !["#", "rgb", "hsl"].some(e => cn.match(`${'^text%-%['}${e}`).size() > 0)
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    top: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^top%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    w: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^w%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                    z: () => {
+                        const c = classList.find(cn => {
+                            return cn.match("^z%-%[").size() > 0
+                        })
+                        if(c) {
+                            value = getArbitraryValue(c);
+                            return true
+                        }
+                    },
+                } as Record<RowindClassType, () => boolean>);
+
+
+                return abitraryClasses[classType] && abitraryClasses[classType]();
             })
         }
 
@@ -98,7 +238,6 @@ export const Rowind = withHooks((props: RowindProps) => {
             breakpoint
         }
     }
-
 
     const hasClass = (classType: RowindClassType) => {
         return getClass(classList, classType).className !== undefined
@@ -142,7 +281,10 @@ export const Rowind = withHooks((props: RowindProps) => {
     const hasOverflow = useSpecialClassValue(["overflow"]) === "overflow"
     const hasHAuto = useSpecialClassValue(["h-auto"]) === "h-auto"
     const hasWAuto = useSpecialClassValue(["w-auto"]) === "w-auto"
-    const hasP = (["p", "pt", "pb", "pr", "pl"] as P[]).some((p) => hasClass(p))
+    const hasHidden = ["hidden", "invisible"].some(s => useSpecialClassValue(["hidden", "visible", "invisible"]) === s)
+    const hasH = hasClass("h")
+    const hasW = hasClass("w")
+    const hasP = (["p", "pt", "pb", "pr", "pl", "px", "py"] as P[]).some((p) => hasClass(p))
     const wVal = useClassValue("w") as UDim
     const hVal = useClassValue("h") as UDim
     const topVal = useClassValue("top") as UDim
@@ -161,11 +303,14 @@ export const Rowind = withHooks((props: RowindProps) => {
             (leftVal || rightVal) ||  0, 
             topVal
         ),
-        Visible: true,
+        Visible: !hasHidden,
         AnchorPoint: originVal,
         BackgroundColor3: bgColorVal,
         BackgroundTransparency: (hasBgTransparent || !hasClass("bgColor")) ? 1 : 0,
-        AutomaticSize: (hasWAuto && hasHAuto) ? Enum.AutomaticSize.XY : hasWAuto ? Enum.AutomaticSize.X : hasHAuto ? Enum.AutomaticSize.Y : Enum.AutomaticSize.None,
+        AutomaticSize: (((!hasH && !hasW) || (hasWAuto && hasHAuto)) && Enum.AutomaticSize.XY)
+                     || ((!hasH || hasHAuto) && Enum.AutomaticSize.Y)
+                     || ((!hasW || hasWAuto) && Enum.AutomaticSize.X)
+                     || Enum.AutomaticSize.None,
         ZIndex: useClassValue("z") as number || 0,
     }
 
@@ -178,9 +323,6 @@ export const Rowind = withHooks((props: RowindProps) => {
             BorderSizePixel: useClassValue("border") as number || 0,
             BorderColor3: useClassValue("borderColor") as Color3 || new Color3(0, 0, 0),
             TextColor3: useClassValue("textColor") as Color3 || new Color3(0, 0, 0)
-        }
-        if(classList.includes("text-[#FF0000]")) {
-            print(getClass(classList, "textColor"))
         }
     }
 
@@ -209,12 +351,14 @@ export const Rowind = withHooks((props: RowindProps) => {
         const ptVal = useClassValue("pt") as UDim
         const prVal = useClassValue("pr") as UDim
         const plVal = useClassValue("pl") as UDim
+        const pxVal = useClassValue("px") as UDim
+        const pyVal = useClassValue("py") as UDim
 
         const paddingProps = {
-            PaddingBottom: pbVal || pVal,
-            PaddingTop: ptVal || pVal,
-            PaddingRight: prVal || pVal,
-            PaddingLeft: plVal || pVal,
+            PaddingBottom: pbVal || pyVal || pVal,
+            PaddingTop: ptVal || pyVal || pVal,
+            PaddingRight: prVal || pxVal || pVal,
+            PaddingLeft: plVal || pxVal || pVal,
         }
         return <uipadding {...paddingProps}/>
     }
@@ -230,6 +374,7 @@ export const Rowind = withHooks((props: RowindProps) => {
         let flex: any = {
             FillDirection: hasFlexCol ? Enum.FillDirection.Vertical : Enum.FillDirection.Horizontal,
             Padding: useClassValue("gap") as UDim || new UDim(0, 0),
+           // SortOrder: Enum.SortOrder.LayoutOrder
         }
 
         if(hasFlexRow) {
@@ -265,48 +410,50 @@ export const Rowind = withHooks((props: RowindProps) => {
 
     return (
         <Roact.Fragment>
-            {props.tagName === "div" && <frame 
-            Event={(props.Event as Roact.JsxInstanceEvents<Frame> | undefined) || {}}
-            {...element}>
-                {hasFlex && <Flex/>}
-                {hasClass("rounded") && <Rounded/>}
-                {hasP && <Padding/>}
-                {hasClass("border") && <Border/>}
-                {hasOverflow 
-                    ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
-                        {props[Roact.Children]}
-                    </scrollingframe>
-                    : props[Roact.Children]
-                }
-            </frame>}
+            {<Roact.Fragment>
+                {props.tagName === "div" && <frame 
+                Event={(props.Event as Roact.JsxInstanceEvents<Frame> | undefined) || {}}
+                {...element}>
+                    {hasFlex && <Flex/>}
+                    {hasClass("rounded") && <Rounded/>}
+                    {hasP && <Padding/>}
+                    {hasClass("border") && <Border/>}
+                    {hasOverflow 
+                        ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
+                            {props[Roact.Children]}
+                        </scrollingframe>
+                        : props[Roact.Children]
+                    }
+                </frame>}
 
-            {props.tagName === "button" && <textbutton 
-            Event={props.Event || {}}
-            AutoButtonColor={false} {...element}>
-                {hasFlex && <Flex/>}
-                {hasClass("rounded") && <Rounded/>}
-                {hasP && <Padding/>}
-                {hasOverflow 
-                    ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
-                        {props[Roact.Children]}
-                    </scrollingframe>
-                    : props[Roact.Children]
-                }
-            </textbutton>}
+                {props.tagName === "button" && <textbutton 
+                Event={props.Event || {}}
+                AutoButtonColor={false} {...element}>
+                    {hasFlex && <Flex/>}
+                    {hasClass("rounded") && <Rounded/>}
+                    {hasP && <Padding/>}
+                    {hasOverflow 
+                        ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
+                            {props[Roact.Children]}
+                        </scrollingframe>
+                        : props[Roact.Children]
+                    }
+                </textbutton>}
 
-            {props.tagName === "text" && <textlabel 
-            Event={(props.Event as Roact.JsxInstanceEvents<TextLabel> | undefined) || {}}
-            {...element}>
-                {hasFlex && <Flex/>}
-                {hasClass("rounded") && <Rounded/>}
-                {hasP && <Padding/>}
-                {hasOverflow 
-                    ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
-                        {props[Roact.Children]}
-                    </scrollingframe>
-                    : props[Roact.Children]
-                }
-            </textlabel>}
+                {props.tagName === "text" && <textlabel 
+                Event={(props.Event as Roact.JsxInstanceEvents<TextLabel> | undefined) || {}}
+                {...element}>
+                    {hasFlex && <Flex/>}
+                    {hasClass("rounded") && <Rounded/>}
+                    {hasP && <Padding/>}
+                    {hasOverflow 
+                        ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
+                            {props[Roact.Children]}
+                        </scrollingframe>
+                        : props[Roact.Children]
+                    }
+                </textlabel>}
+            </Roact.Fragment>}
         </Roact.Fragment>
     )
 })

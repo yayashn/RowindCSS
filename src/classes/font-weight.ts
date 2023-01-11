@@ -1,3 +1,5 @@
+export const fontWeightPattern = "font-[a-z-]+"
+
 export const fontWeight = {
     "font-bold": Enum.FontWeight.Bold,
     "font-extrabold": Enum.FontWeight.ExtraBold,

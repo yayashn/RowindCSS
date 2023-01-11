@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/rowindcss",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "out/init.lua",
   "repository": "https://github.com/yayashn/RowindCSS.git",
   "author": "Yahya <yks@dr.com>",

@@ -1,3 +1,6 @@
+export const bgColorArbPattern = "bg%-%[(#%x%x%x%x%x%x|rgb%(%d+,%d+,%d+%)|hsv%(%d+,%d+,%d+%))]"
+export const bgColorPattern = "bg%-[a-z]+%-[0-9]+";
+
 export const bgColor = {
     "bg-black": Color3.fromHex("#000000"),
     "bg-white": Color3.fromHex("#ffffff"),

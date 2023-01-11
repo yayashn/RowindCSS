@@ -1,4 +1,8 @@
-export type P = "p" | "pb" | "pl" | "pt" | "pr";
+export type P = "p" | "pb" | "pl" | "pt" | "pr" | "px" | "py";
+export const pArbPattern = "p%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+export const pbArbPattern = "pb%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+export const plArbPattern = "pl%-%[([0-9]%d*%%?|[1-9]%d*)%]"
+export const ptArbPattern = "pt%-%[([0-9]%d*%%?|[1-9]%d*)%]"
 
 export const p = {
     "p-0": new UDim(0, 0),

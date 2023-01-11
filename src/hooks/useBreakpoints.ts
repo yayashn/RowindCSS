@@ -23,7 +23,6 @@ const reverse = <T>(array: T[]) => {
     return newArray
 }
 
-
 export default (screenGui: ScreenGui) => {
     const [breakpoint, setBreakpoint] = useState<Breakpoint[]>([""]);
 
