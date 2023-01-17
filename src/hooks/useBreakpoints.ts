@@ -25,15 +25,24 @@ const reverse = <T>(array: T[]) => {
 
 export default (screenGui: ScreenGui) => {
     const [breakpoint, setBreakpoint] = useState<Breakpoint[]>([""]);
+    const player = screenGui.FindFirstAncestorWhichIsA("Player")!;
+    const isServer = game.GetService("Players").LocalPlayer === undefined;
+    const screenSize = isServer ? player.WaitForChild("screenSize") as NumberValue : undefined;
 
     useEffect(() => {
         const updateBreakpoints = () => {
             const bps = Object.entries(breakpoints);
-            const newBreakpoints = bps.filter(([_, size]) => size <= screenGui.AbsoluteSize.X).map(([bp]) => bp as Breakpoint);
+            const absoluteSize = isServer ? screenSize!.Value : screenGui.AbsoluteSize.X
+            const newBreakpoints = bps.filter(([_, size]) => size <= absoluteSize).map(([bp]) => bp as Breakpoint);
             setBreakpoint(reverse(newBreakpoints));
         }
+
         updateBreakpoints()
-        screenGui.GetPropertyChangedSignal("AbsoluteSize").Connect(updateBreakpoints)
+        if (isServer) {
+            screenSize!.Changed.Connect(updateBreakpoints)
+        } else {
+            screenGui.GetPropertyChangedSignal("AbsoluteSize").Connect(updateBreakpoints)
+        }
     }, [])
 
     return breakpoint

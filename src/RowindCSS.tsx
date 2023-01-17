@@ -6,22 +6,6 @@ import { withHooks } from "@rbxts/roact-hooked"
 import { classes } from "./classes/classes"
 import Object from "@rbxts/object-utils"
 
-const player = game.GetService("Players").LocalPlayer || script.FindFirstAncestorWhichIsA("Player")!;
-
-const init = () => {
-    const screenGui = new Instance("ScreenGui")
-    screenGui.Name = "RowindInit"
-    screenGui.Parent = player.FindFirstChildWhichIsA("PlayerGui")!
-
-    const screenWidth = new Instance("NumberValue")
-    screenWidth.Name = "ScreenWidth"
-    screenWidth.Parent = screenGui
-
-    return screenGui
-}
-
-const rowindInit = (player.FindFirstChild("RowindInit") || init()) as ScreenGui;
-
 export interface RowindProps extends Roact.PropsWithChildren {
     className?: string
     xsClassName?: string
@@ -38,6 +22,22 @@ export interface RowindProps extends Roact.PropsWithChildren {
 type RowindClassType = keyof typeof classes;
 type RowindSpecialClass = typeof specialClasses[number]
 const specialClasses = ["flex", "bg-transparent", "overflow", "h-auto", "w-auto"]
+
+const player = script.FindFirstAncestorWhichIsA("Player")!;
+
+const init = () => {
+    const screenGui = new Instance("ScreenGui")
+    screenGui.Name = "RowindInit"
+    screenGui.Parent = player.FindFirstChildWhichIsA("PlayerGui")!
+
+    const screenWidth = new Instance("NumberValue")
+    screenWidth.Name = "ScreenWidth"
+    screenWidth.Parent = screenGui
+
+    return screenGui
+}
+
+const rowindInit = (player.FindFirstChild("RowindInit") || init()) as ScreenGui;
 
 export const breakpoints = {
     default: 0,
@@ -227,7 +227,6 @@ export const Rowind = withHooks((props: RowindProps) => {
                     },
                 } as Record<RowindClassType, () => boolean>);
 
-
                 return abitraryClasses[classType] && abitraryClasses[classType]();
             })
         }
@@ -243,7 +242,7 @@ export const Rowind = withHooks((props: RowindProps) => {
         return getClass(classList, classType).className !== undefined
     }
 
-    const useClassValue =  (classType: RowindClassType) => {
+    const useClassValue = (classType: RowindClassType) => {
         for(const bp of activeBreakpoints) {
             const classListWithBp = classList
                 .filter(c => c.match(`${bp}${bp !== "" ? ':' : ""}`).size() > 0)
@@ -278,7 +277,8 @@ export const Rowind = withHooks((props: RowindProps) => {
 
     const hasFlex = useSpecialClassValue(["flex"]) === "flex"
     const hasBgTransparent = useSpecialClassValue(["bg-transparent"]) === "bg-transparent"
-    const hasOverflow = useSpecialClassValue(["overflow"]) === "overflow"
+    const hasOverflow = useSpecialClassValue(["overflow", "overflow-hidden"]) === "overflow"
+    const hasOverflowHidden = useSpecialClassValue(["overflow", "overflow-hidden"]) === "overflow-hidden"
     const hasHAuto = useSpecialClassValue(["h-auto"]) === "h-auto"
     const hasWAuto = useSpecialClassValue(["w-auto"]) === "w-auto"
     const hasHidden = ["hidden", "invisible"].some(s => useSpecialClassValue(["hidden", "visible", "invisible"]) === s)
@@ -294,7 +294,7 @@ export const Rowind = withHooks((props: RowindProps) => {
     const originVal = useClassValue("origin") as Vector2
     const leadingVal = useClassValue("leading") as number
     const fontWeightVal = useClassValue("fontWeight") as Enum.FontWeight || Enum.FontWeight.Regular
-    const textSizeVal = useClassValue("text") as number
+    const textSizeVal = useClassValue("text") as number;
 
     let element = {
         BorderSizePixel: 0,
@@ -312,6 +312,7 @@ export const Rowind = withHooks((props: RowindProps) => {
                      || ((!hasW || hasWAuto) && Enum.AutomaticSize.X)
                      || Enum.AutomaticSize.None,
         ZIndex: useClassValue("z") as number || 0,
+        ClipsDescendants: hasOverflowHidden,
     }
 
     if(props.tagName === "text" || props.tagName === "button") {
@@ -410,50 +411,48 @@ export const Rowind = withHooks((props: RowindProps) => {
 
     return (
         <Roact.Fragment>
-            {<Roact.Fragment>
-                {props.tagName === "div" && <frame 
-                Event={(props.Event as Roact.JsxInstanceEvents<Frame> | undefined) || {}}
-                {...element}>
-                    {hasFlex && <Flex/>}
-                    {hasClass("rounded") && <Rounded/>}
-                    {hasP && <Padding/>}
-                    {hasClass("border") && <Border/>}
-                    {hasOverflow 
-                        ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
-                            {props[Roact.Children]}
-                        </scrollingframe>
-                        : props[Roact.Children]
-                    }
-                </frame>}
+            {props.tagName === "div" && <frame 
+            Event={(props.Event as Roact.JsxInstanceEvents<Frame> | undefined) || {}}
+            {...element}>
+                {hasFlex && <Flex/>}
+                {hasClass("rounded") && <Rounded/>}
+                {hasP && <Padding/>}
+                {hasClass("border") && <Border/>}
+                {hasOverflow 
+                    ? <scrollingframe ZIndex={-2}>
+                        {props[Roact.Children]}
+                    </scrollingframe>
+                    : props[Roact.Children]
+                }
+            </frame>}
 
-                {props.tagName === "button" && <textbutton 
-                Event={props.Event || {}}
-                AutoButtonColor={false} {...element}>
-                    {hasFlex && <Flex/>}
-                    {hasClass("rounded") && <Rounded/>}
-                    {hasP && <Padding/>}
-                    {hasOverflow 
-                        ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
-                            {props[Roact.Children]}
-                        </scrollingframe>
-                        : props[Roact.Children]
-                    }
-                </textbutton>}
+            {props.tagName === "button" && <textbutton 
+            Event={props.Event || {}}
+            AutoButtonColor={false} {...element}>
+                {hasFlex && <Flex/>}
+                {hasClass("rounded") && <Rounded/>}
+                {hasP && <Padding/>}
+                {hasOverflow 
+                    ? <scrollingframe ZIndex={-2}>
+                        {props[Roact.Children]}
+                    </scrollingframe>
+                    : props[Roact.Children]
+                }
+            </textbutton>}
 
-                {props.tagName === "text" && <textlabel 
-                Event={(props.Event as Roact.JsxInstanceEvents<TextLabel> | undefined) || {}}
-                {...element}>
-                    {hasFlex && <Flex/>}
-                    {hasClass("rounded") && <Rounded/>}
-                    {hasP && <Padding/>}
-                    {hasOverflow 
-                        ? <scrollingframe ZIndex={-2} Size={new UDim2(1,0,1,0)}>
-                            {props[Roact.Children]}
-                        </scrollingframe>
-                        : props[Roact.Children]
-                    }
-                </textlabel>}
-            </Roact.Fragment>}
+            {props.tagName === "text" && <textlabel 
+            Event={(props.Event as Roact.JsxInstanceEvents<TextLabel> | undefined) || {}}
+            {...element}>
+                {hasFlex && <Flex/>}
+                {hasClass("rounded") && <Rounded/>}
+                {hasP && <Padding/>}
+                {hasOverflow 
+                    ? <scrollingframe ZIndex={-2}>
+                        {props[Roact.Children]}
+                    </scrollingframe>
+                    : props[Roact.Children]
+                }
+            </textlabel>}
         </Roact.Fragment>
     )
 })
