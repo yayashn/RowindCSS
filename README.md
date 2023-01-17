@@ -78,6 +78,7 @@ Currently supported Tailwind classes:
 - Size (width, height)
 - Visibility
 
+## Server Side UI
 If you are using server sided UI, run this command inside your directory 
 that is responsible for Starter Player:
 ```bash
