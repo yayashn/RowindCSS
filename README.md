@@ -67,5 +67,5 @@ Currently supported Tailwind classes:
 If you are using server sided UI, run this command inside your directory 
 that is responsible for Starter Player:
 ```bash
-git archive --remote=https://github.com/yayashn/RowindCSS.git main src/rowindconfig | tar -x
+npx degit yayashn/RowindCSS/src/rowindconfig#main rowindconfig
 ```
