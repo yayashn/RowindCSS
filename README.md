@@ -63,21 +63,6 @@ Currently supported Tailwind classes:
 - Size (width, height)
 - Visibility
 
-Refer to the tailwind documentation for class names.
-https://tailwindcss.com/
-
-Currently supported Tailwind classes:
-- Flex (align items, justify-content, gap, flex direction)
-- Background (colour)
-- Border (size, colour, transparency, radius)
-- Font (weight)
-- Positioning (Left, Top, Right, Bottom)
-- Origin (anchor point)
-- Padding
-- Text (size, colour)
-- Size (width, height)
-- Visibility
-
 ## Server Side UI
 If you are using server sided UI, run this command inside your directory 
 that is responsible for Starter Player:
