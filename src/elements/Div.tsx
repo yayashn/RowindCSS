@@ -1,16 +1,14 @@
-import Roact from "@rbxts/roact"
-import { Rowind } from "../RowindCSS"
+import Roact from "@rbxts/roact";
+import RowindElement from "./RowindElement";
 
-interface Props extends Roact.PropsWithChildren {
+interface RowindProps extends Roact.PropsWithChildren<{}> {
     className?: string
-    Text?: string,
-    Event?: Roact.JsxInstanceEvents<TextButton> | undefined
 }
 
-export default (props: Props) => {
+export default (props: RowindProps) => {
     return (
-        <Rowind tagName="div" Event={props.Event} Text={props.Text} className={props.className}>
+        <RowindElement tagName="div" className={props.className}>
             {props[Roact.Children]}
-        </Rowind>
+        </RowindElement>
     )
 }
