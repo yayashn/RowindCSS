@@ -92,4 +92,7 @@ export default {
         valueTypes: ["special"],
         specialValues: ["overflow-hidden"]
     },
+    rounded: {
+        valueTypes: ["udim"]
+    }
 }

@@ -1,22 +1,20 @@
 import classes from "../classes"
-import { BorderValueName, ClassList, ClassName, ClassType, ClassValueName, Color3ValueName, UDimValueName, Vector2ValueName, ZValueName } from "../types"
+import { BorderValueName, ClassList, ClassName, ClassType, ClassValueName, ClassValueType, Color3ValueName, UDimValueName, Vector2ValueName, ZValueName } from "../types"
 import values from "../values/values"
 import Object from "@rbxts/object-utils"
 
-export default (classList: ClassList, classType: ClassType) => {
-    const classValueTypes = classes[classType].valueTypes
+export default (classList: ClassList, classType: ClassType, valueType: ClassValueType = classes[classType].valueTypes[0] as ClassValueType) => {
     const specialClassValues = ((classes[classType] as any).specialValues || []) as ClassName[]
     for(const class_ of classList) {
-        if(classValueTypes.some(classValueType => classValueType === "special") 
-        && specialClassValues.some(specialClassValue => specialClassValue === class_)) {
+        if(classType === (class_ as unknown) || (valueType === "special" && (specialClassValues.some(s => s === class_)))) {
             return class_
         } else if(class_.match(`^${classType}%-`).size() > 0) {
             const classValueString = class_.split(`${classType}-`)[1] as ClassValueName
-            const isUDim = classValueTypes.some(classValueType => classValueType === "udim")
+            const isUDim = valueType === "udim"
 
             if(classValueString.match("%[").size() > 0) {
                 const classArbitraryValue = classValueString.sub(1,-2).sub(2)
-                if(classValueTypes.some(classValueType => classValueType === "udim")) {
+                if(isUDim) {
                     if(classArbitraryValue.match("px").size() > 0) {
                         return new UDim(0, tonumber(classArbitraryValue.sub(1,-3)))
                     } else if(classArbitraryValue.match("%%").size() > 0) {
@@ -27,16 +25,16 @@ export default (classList: ClassList, classType: ClassType) => {
                 const hasUDim = isUDim
                                 && Object.keys(values.udim).some(u => u === classValueString)
 
-                const isColor3 = classValueTypes.some(classValueType => classValueType === "color3")
+                const isColor3 = valueType === 'color3'
                             && Object.keys(values.color3).some(u => u === classValueString)
 
-                const isVector2 = classValueTypes.some(classValueType => classValueType === "vector2")
+                const isVector2 = valueType === 'vector2'
                             && Object.keys(values.vector2).some(u => u === classValueString)
                 
-                const isZ = classValueTypes.some(classValueType => classValueType === "z")
+                const isZ = valueType === 'z'
                             && Object.keys(values.z).some(u => u === classValueString)
 
-                const isBorder = classValueTypes.some(classValueType => classValueType === "border")
+                const isBorder = valueType === 'border'
                             && Object.keys(values.border).some(u => u === classValueString)
 
 

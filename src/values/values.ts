@@ -4,6 +4,7 @@ import vector2 from "./vector2"
 import leading from "./leading"
 import z from "./z"
 import border from "./border"
+import rounded from "./rounded"
 
 const values = {
     udim,
@@ -11,7 +12,8 @@ const values = {
     vector2,
     leading,
     z,
-    border
+    border,
+    rounded
 } 
 
 export default values
