@@ -5,6 +5,7 @@ import getClassValue from "../utils/getClassValue";
 
 export default withHooks(() => {
     const classList = useContext(ClassListContext)
+
     const roundedProps = {
         CornerRadius: getClassValue(classList, "rounded") as UDim || new UDim(0, 0),
     }

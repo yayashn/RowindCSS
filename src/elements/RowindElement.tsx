@@ -9,13 +9,13 @@ import getElementProps from "../utils/getElementProps"
 
 interface RowindProps extends Roact.PropsWithChildren<{}> {
     tagName: "div" | "button" | "text",
-    className?: string
+    className?: string,
+    Text?: string,
 }
 
 export default (props: RowindProps) => {
     const classList = (props.className ?? "").split(" ") as ClassName[];
-    const elementProps = getElementProps(classList, props.tagName)
-
+    const elementProps = getElementProps(classList, props)
     return (
         <ClassListContext.Provider value={classList}>
             {props.tagName === "div" && 

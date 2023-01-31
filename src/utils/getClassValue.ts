@@ -1,5 +1,5 @@
 import classes from "../classes"
-import { BorderValueName, ClassList, ClassName, ClassType, ClassValueName, ClassValueType, Color3ValueName, UDimValueName, Vector2ValueName, ZValueName } from "../types"
+import { BorderValueName, ClassList, ClassName, ClassType, ClassValueName, ClassValueType, RoundedValueName, Color3ValueName, UDimValueName, Vector2ValueName, ZValueName, BorderOpacityValueName, LeadingValueName, TextValueName, FontWeightValueName } from "../types"
 import values from "../values/values"
 import Object from "@rbxts/object-utils"
 
@@ -37,6 +37,21 @@ export default (classList: ClassList, classType: ClassType, valueType: ClassValu
                 const isBorder = valueType === 'border'
                             && Object.keys(values.border).some(u => u === classValueString)
 
+                const isRounded = valueType === 'rounded'
+                            && Object.keys(values.rounded).some(u => u === classValueString)
+
+                const isBorderOpacity = valueType === 'border-opacity'
+                            && Object.keys(values.borderOpacity).some(u => u === classValueString)
+                
+                const isLeading = valueType === 'leading'
+                            && Object.keys(values.leading).some(u => u === classValueString)
+
+                const isText = valueType === 'text'
+                            && Object.keys(values.text).some(u => u === classValueString)
+
+                const isFontWeight = valueType === 'font-weight'
+                            && Object.keys(values.fontWeight).some(u => u === classValueString)
+
 
                 if(hasUDim) {
                     return values.udim[classValueString as UDimValueName]
@@ -48,6 +63,16 @@ export default (classList: ClassList, classType: ClassType, valueType: ClassValu
                     return values.vector2[classValueString as Vector2ValueName]
                 } else if (isBorder) {
                     return values.border[classValueString as BorderValueName]
+                } else if (isRounded) {
+                    return values.rounded[classValueString as RoundedValueName]
+                } else if (isBorderOpacity) {
+                    return values.borderOpacity[classValueString as BorderOpacityValueName]
+                } else if(isLeading) {
+                    return values.leading[classValueString as LeadingValueName]
+                } else if(isText) {
+                    return values.text[classValueString as TextValueName]
+                } else if(isFontWeight) {
+                    return values.fontWeight[classValueString as FontWeightValueName]
                 }
             }
         }

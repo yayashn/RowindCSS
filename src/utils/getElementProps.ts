@@ -1,7 +1,14 @@
+import Roact from "@rbxts/roact"
 import { ClassList } from "../types"
 import getClassValue from "./getClassValue"
 
-export default (classList: ClassList, tagName: "div" | "button" | "text") => {
+interface RowindProps extends Roact.PropsWithChildren<{}> {
+    tagName: "div" | "button" | "text",
+    className?: string,
+    Text?: string,
+}
+
+export default (classList: ClassList, props: RowindProps) => {
     const hasH = getClassValue(classList, "h", "udim") !== undefined
     const hasW = getClassValue(classList, "w", "udim") !== undefined
     const hasWAuto = getClassValue(classList, "w", "special") === "w-auto"
@@ -22,12 +29,28 @@ export default (classList: ClassList, tagName: "div" | "button" | "text") => {
                      || Enum.AutomaticSize.None,
         ZIndex: getClassValue(classList, "z", "z") as number || 0,
         ClipsDescendants: hasOverflowHidden,
+        BorderSizePixel: 0,
     }
 
-    if(tagName === "text" || tagName === "button") {
+    const hasCapitalize = getClassValue(classList, "text", "special") === "capitalize"
+    const hasLowercase = getClassValue(classList, "text", "special") === "lowercase"
+    const hasUppercase = getClassValue(classList, "text", "special") === "uppercase"
+    const fontWeightVal = getClassValue(classList, "font", "font-weight") as Enum.FontWeight || Enum.FontWeight.Regular
+
+    if(props.tagName === "text" || props.tagName === "button") {
         (elementProps as unknown) = {...elementProps,
             BorderSizePixel: getClassValue(classList, "border", "border") as number || 0,
             BorderColor3: getClassValue(classList, "border", "color3") as Color3 || new Color3(0, 0, 0),
+            TextSize: getClassValue(classList, "text", "text") as number || 14,
+            LineHeight: getClassValue(classList, "leading", "leading") as number || 1,
+            FontFace: new Font("Arial", props.tagName !== "button" ? fontWeightVal 
+            : fontWeightVal === Enum.FontWeight.Regular ? Enum.FontWeight.Regular 
+            : Enum.FontWeight.Bold),
+            TextColor3: getClassValue(classList, "text", "color3") as Color3 || new Color3(0, 0, 0),
+            Text: hasCapitalize ? props.Text!.split("").map((char, index) => index === 0 ? char.upper() : char).join("")
+            : hasLowercase ? props.Text!.lower()
+            : hasUppercase ? props.Text!.upper()
+            : props.Text,
         }
     }
 

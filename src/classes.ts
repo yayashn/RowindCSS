@@ -83,16 +83,23 @@ export default {
         valueTypes: ["special"]
     },
     border: {
-        valueTypes: ["color3", "border"]
+        valueTypes: ["color3", "border", "border-opacity"]
     },
     z: {
         valueTypes: ["z"]
     },
-    "overflow": {
+    overflow: {
         valueTypes: ["special"],
         specialValues: ["overflow-hidden"]
     },
     rounded: {
-        valueTypes: ["udim"]
+        valueTypes: ["rounded"]
+    },
+    text: {
+        valueTypes: ["color3", "text", "special"],
+        specialValues: ["capitalize", "uppercase", "lowercase"]
+    },
+    font: {
+        valueTypes: ["font"],
     }
 }

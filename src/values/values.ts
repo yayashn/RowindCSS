@@ -5,6 +5,9 @@ import leading from "./leading"
 import z from "./z"
 import border from "./border"
 import rounded from "./rounded"
+import borderOpacity from "./borderOpacity"
+import text from "./text"
+import fontWeight from "./fontWeight"
 
 const values = {
     udim,
@@ -13,7 +16,10 @@ const values = {
     leading,
     z,
     border,
-    rounded
+    rounded,
+    borderOpacity,
+    text,
+    fontWeight
 } 
 
 export default values
