@@ -1,8 +1,8 @@
 # Developer Guide
 
-## Structure
+## Core Structure
 `elements` Contains the available tags, e.g: Div, Button, Text
-`utils` Most importantly contains the `getClassValue` which is responsible for parsing the classNames and returning the correct value.
+`utils` Most importantly contains the `getClassValue` which is responsible for parsing the classNames and returning the correct value. And contains `getElementProps` which is self explanatory.
 `values` Contains the isolated suffix non-arbitrary value types. For example blue-500. 
 `classes.ts` Contains an object of className:Properties key-value pairs.
 `types.ts` Contains all types.
