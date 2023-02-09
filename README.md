@@ -37,7 +37,7 @@ Import the available Rowind components and start using them in Roact with Tailwi
 
     export const Test = () => {
         return (
-            <Div className="w-full md:w-96 h-48 p-10 border-4 overflow-y border-red-700 border-opacity-50 flex justify-center items-end gap-3 top-2/4 left-2/4 rounded-xl bg-blue-500">
+            <Div className="w-full h-48 p-10 border-4 overflow-y border-red-700 border-opacity-50 flex justify-center items-end gap-3 top-2/4 left-2/4 rounded-xl bg-blue-500">
                 <Div className="w-10 h-10 rounded-sm"/>
                 <Div className="w-10 h-10 rounded-lg bg-yellow-300"/>
                 <Div className="w-10 h-10 bg-green-700"/>
@@ -62,10 +62,3 @@ Currently supported Tailwind classes:
 - Text (size, colour)
 - Size (width, height)
 - Visibility
-
-## Server Side UI
-If you are using server sided UI, run this command inside your directory 
-that is responsible for Starter Player:
-```bash
-npx degit yayashn/RowindCSS/src/rowindconfig#main rowindconfig
-```
