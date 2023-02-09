@@ -24,8 +24,8 @@ export default (classList: ClassList, props: RowindProps) => {
                         getClassValue(classList, "h", "udim") as UDim || new UDim(0,40)),
         BackgroundColor3: getClassValue(classList, "bg", "color3") as Color3 || new Color3(0,0,0),
         BackgroundTransparency: hasBgColor ? 0 : 1,
-        Position: new UDim2(getClassValue(classList, "top") as UDim || new UDim(0,0),
-                            getClassValue(classList, "left") as UDim || new UDim(0,0)),
+        Position: new UDim2(getClassValue(classList, "left") as UDim || new UDim(0,0),
+                            getClassValue(classList, "top") as UDim || new UDim(0,0)),
         AnchorPoint: getClassValue(classList, "origin") as Vector2 || new Vector2(0,0),
         Visible: getClassValue(classList, "invisible") ? false : true,
         AutomaticSize: (((!hasH && !hasW) || (hasWAuto && hasHAuto)) && Enum.AutomaticSize.XY)
