@@ -12,17 +12,17 @@ interface RowindProps extends Roact.PropsWithChildren<{}> {
 }
 
 export default (classList: ClassList, props: RowindProps) => {
-    const hasH = getClassValue(classList, "h", "udim") !== undefined
-    const hasW = getClassValue(classList, "w", "udim") !== undefined
+    const hasH = getClassValue(classList, "h", "udim") !== false
+    const hasW = getClassValue(classList, "w", "udim") !== false
     const hasWAuto = getClassValue(classList, "w", "special") === "w-auto"
     const hasHAuto = getClassValue(classList, "h", "special") === "h-auto"
     const hasOverflowHidden = getClassValue(classList, "overflow") === "overflow-hidden"
-    const hasBgColor = getClassValue(classList, "bg", "color3") !== undefined
+    const hasBgColor = getClassValue(classList, "bg", "color3") !== false
 
     let elementProps = {
         Size: new UDim2(getClassValue(classList, "w", "udim") as UDim || new UDim(0,40), 
                         getClassValue(classList, "h", "udim") as UDim || new UDim(0,40)),
-        BackgroundColor3: getClassValue(classList, "bg", "color3") as Color3 || new Color3(1,1,1),
+        BackgroundColor3: getClassValue(classList, "bg", "color3") as Color3 || new Color3(0,0,0),
         BackgroundTransparency: hasBgColor ? 0 : 1,
         Position: new UDim2(getClassValue(classList, "top") as UDim || new UDim(0,0),
                             getClassValue(classList, "left") as UDim || new UDim(0,0)),

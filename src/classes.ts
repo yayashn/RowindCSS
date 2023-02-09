@@ -8,7 +8,8 @@ export default {
         specialValues: ["h-auto"]
     },
     bg: {
-        valueTypes: ["color3", "image"]
+        valueTypes: ["color3", "image", "special"],
+        specialValues: ["bg-transparent"]
     },
     right: {
         valueTypes: ["udim"]
