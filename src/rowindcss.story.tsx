@@ -41,7 +41,7 @@ const Component = () => {
                                 print("clicked")
                             },
                         }}
-                        className="h-[50px] aspect-[1/1] bg-slate-500 hover:bg-purple-500 hover:rounded-xl" Key={i} />
+                        className="h-[50px] aspect-[1/1] bg-slate-500 hover:bg-purple-500 hover:rounded-xl hover:w-40" Key={i} />
                     )
                 })}
             </Div>
