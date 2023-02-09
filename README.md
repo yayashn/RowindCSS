@@ -52,7 +52,7 @@ Refer to the tailwind documentation for class names.
 https://tailwindcss.com/
 
 Currently supported Tailwind classes:
-- Flex (align items, justify-content, gap, flex direction)
+- Flex (align-items, justify-content, gap, flex-direction)
 - Background (colour)
 - Border (size, colour, transparency, radius)
 - Font (weight)
@@ -61,4 +61,6 @@ Currently supported Tailwind classes:
 - Padding
 - Text (size, colour)
 - Size (width, height)
-- Visibility
+- Aspect Ratio
+Experimental:
+- Overflow (overflow-x, overflow-y)
