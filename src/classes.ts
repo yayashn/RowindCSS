@@ -8,7 +8,7 @@ export default {
         specialValues: ["h-auto"]
     },
     bg: {
-        valueTypes: ["color3"]
+        valueTypes: ["color3", "image"]
     },
     right: {
         valueTypes: ["udim"]
@@ -90,7 +90,7 @@ export default {
     },
     overflow: {
         valueTypes: ["special"],
-        specialValues: ["overflow-hidden"]
+        specialValues: ["overflow-hidden", "overflow", "overflow-y", "overflow-x"]
     },
     rounded: {
         valueTypes: ["rounded"]
@@ -101,5 +101,8 @@ export default {
     },
     font: {
         valueTypes: ["font"],
+    },
+    aspect: {
+        valueTypes: ["aspect"]
     }
 }

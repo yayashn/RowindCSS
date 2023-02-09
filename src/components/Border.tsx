@@ -1,14 +1,15 @@
 import Roact from "@rbxts/roact"
 import { withHooks, useContext } from "@rbxts/roact-hooked"
-import { ClassListContext } from "../ClassListContext"
+import { ElementContext } from "../ElementContext"
 import getClassValue from "../utils/getClassValue"
 
 export default withHooks(() => {
-    const classList = useContext(ClassListContext)
+    const {classList} = useContext(ElementContext)
 
     if(!getClassValue(classList, "border", "border")) return <Roact.Fragment/>
 
-    const hasRounded = getClassValue(classList, "rounded")
+    const hasRounded = getClassValue(classList, "rounded") 
+    && (getClassValue(classList, "rounded") !== new UDim(0, 0))
 
     const borderProps = {
         Thickness: getClassValue(classList, "border", "border") as number || 0,

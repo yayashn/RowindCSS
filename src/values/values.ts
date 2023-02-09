@@ -8,6 +8,7 @@ import rounded from "./rounded"
 import borderOpacity from "./borderOpacity"
 import text from "./text"
 import fontWeight from "./fontWeight"
+import aspect from "./number"
 
 const values = {
     udim,
@@ -19,7 +20,8 @@ const values = {
     rounded,
     borderOpacity,
     text,
-    fontWeight
+    fontWeight,
+    aspect
 } 
 
 export default values

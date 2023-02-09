@@ -1,10 +1,10 @@
 import Roact from "@rbxts/roact"
 import getClassValue from "../utils/getClassValue"
 import { useContext, withHooks } from "@rbxts/roact-hooked"
-import { ClassListContext } from "../ClassListContext"
+import { ElementContext } from "../ElementContext"
 
 export default withHooks(() => {
-    const classList = useContext(ClassListContext)
+    const {classList} = useContext(ElementContext)
     if(!getClassValue(classList, "flex")) return <Roact.Fragment/>
 
     const hasFlexCol = getClassValue(classList, "flex-col")

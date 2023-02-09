@@ -6,6 +6,9 @@ interface RowindProps extends Roact.PropsWithChildren<{}> {
     tagName: "div" | "button" | "text",
     className?: string,
     Text?: string,
+    Events?: Roact.JsxInstanceEvents<Frame> |
+             Roact.JsxInstanceEvents<TextButton> |
+             Roact.JsxInstanceEvents<TextLabel>
 }
 
 export default (classList: ClassList, props: RowindProps) => {
@@ -14,11 +17,13 @@ export default (classList: ClassList, props: RowindProps) => {
     const hasWAuto = getClassValue(classList, "w", "special") === "w-auto"
     const hasHAuto = getClassValue(classList, "h", "special") === "h-auto"
     const hasOverflowHidden = getClassValue(classList, "overflow") === "overflow-hidden"
+    const hasBgColor = getClassValue(classList, "bg", "color3") !== undefined
 
     let elementProps = {
         Size: new UDim2(getClassValue(classList, "w", "udim") as UDim || new UDim(0,40), 
                         getClassValue(classList, "h", "udim") as UDim || new UDim(0,40)),
-        BackgroundColor3: getClassValue(classList, "bg") as Color3 || new Color3(1,1,1),
+        BackgroundColor3: getClassValue(classList, "bg", "color3") as Color3 || new Color3(1,1,1),
+        BackgroundTransparency: hasBgColor ? 0 : 1,
         Position: new UDim2(getClassValue(classList, "top") as UDim || new UDim(0,0),
                             getClassValue(classList, "left") as UDim || new UDim(0,0)),
         AnchorPoint: getClassValue(classList, "origin") as Vector2 || new Vector2(0,0),
@@ -51,6 +56,7 @@ export default (classList: ClassList, props: RowindProps) => {
             : hasLowercase ? props.Text!.lower()
             : hasUppercase ? props.Text!.upper()
             : props.Text,
+            Events: props.Events
         }
     }
 

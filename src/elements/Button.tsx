@@ -3,10 +3,14 @@ import RowindElement from "./RowindElement";
 
 interface RowindProps extends Roact.PropsWithChildren<{}> {
     className?: string
+    Event?: Roact.JsxInstanceEvents<TextButton> | undefined,
+    Text?: string,
+    ref?: Roact.Ref<TextButton>
 }
 
-export default ({className = ""}: RowindProps) => {
+export default ({className = "", Event, Text = "", ref}: RowindProps) => {
     return (
-        <RowindElement tagName="button" className={className}/>
+        <RowindElement ref={ref} Event={Event} Text={Text}
+        tagName="button" className={className}/>
     )
 }
