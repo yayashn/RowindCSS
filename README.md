@@ -41,7 +41,12 @@ Import the available Rowind components and start using them in Roact with Tailwi
                 <Div className="w-10 h-10 rounded-sm"/>
                 <Div className="w-10 h-10 rounded-lg bg-yellow-300"/>
                 <Div className="w-10 h-10 bg-green-700"/>
-                <Button Text="X" className="w-10 h-10 rounded-full bg-red-700"/>
+                <Button Event={{
+                  MouseButton1Click: () => {
+                    print("clicked")
+                  }
+                }}
+                Text="X" className="w-10 h-10 rounded-full bg-red-700"/>
                 <Text Text="Y" className="w-10 h-10 rounded-full bg-purple-800"/>
             </Div>
         )
@@ -64,3 +69,10 @@ Currently supported Tailwind classes:
 - Aspect Ratio
 Experimental:
 - Overflow (overflow-x, overflow-y)
+
+## FAQ
+How to attach references?
+You can use the 'ref' property of any Rowind component.
+```
+<Button ref={yourRef}/>
+```
