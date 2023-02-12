@@ -6,13 +6,13 @@ import getClassValue from "../utils/getClassValue";
 export default withHooks(() => {
     const { classList } = useContext(ElementContext)
 
-    if(!getClassValue(classList, "bg", "string")) return <Roact.Fragment/>
+    const value = getClassValue(classList, "bg", "string") as string
+    if(!(value && typeOf(value) === "string" && value.match("^rbx").size() > 0)) return <Roact.Fragment/>
 
     const imageProps = {
         Size: new UDim2(1, 0, 1, 0),
         Image: getClassValue(classList, "bg", "string") as string || "",
         BackgroundTransparency: 1,
-        ZIndex: -100,
     }
     
     return <imagelabel {...imageProps}/>

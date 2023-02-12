@@ -17,10 +17,10 @@ export default withHooks(() => {
     if(!pVal && !pbVal && !ptVal && !prVal && !plVal && !pxVal && !pyVal) return <Roact.Fragment/>
 
     const paddingProps = {
-        PaddingBottom: pbVal || pyVal || pVal,
-        PaddingTop: ptVal || pyVal || pVal,
-        PaddingRight: prVal || pxVal || pVal,
-        PaddingLeft: plVal || pxVal || pVal,
+        PaddingBottom: pbVal || pyVal || pVal || new UDim(0, 0),
+        PaddingTop: ptVal || pyVal || pVal || new UDim(0, 0),
+        PaddingRight: prVal || pxVal || pVal || new UDim(0, 0),
+        PaddingLeft: plVal || pxVal || pVal || new UDim(0, 0)
     }
 
     return <uipadding {...paddingProps}/>

@@ -5,10 +5,15 @@ import leading from "./leading"
 import z from "./z"
 import border from "./border"
 import rounded from "./rounded"
-import borderOpacity from "./borderOpacity"
+import opacity from "./opacity"
 import text from "./text"
 import fontWeight from "./fontWeight"
 import aspect from "./number"
+import scale from "./scale"
+import minH from "./minH"
+import minW from "./minW"
+import maxH from "./maxH"
+import maxW from "./maxW"
 
 const values = {
     udim,
@@ -18,10 +23,15 @@ const values = {
     z,
     border,
     rounded,
-    borderOpacity,
+    opacity,
     text,
     fontWeight,
-    aspect
-} 
+    aspect,
+    scale,
+    minH,
+    minW,
+    maxH,
+    maxW
+}
 
 export default values

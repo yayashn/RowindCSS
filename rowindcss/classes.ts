@@ -8,7 +8,7 @@ export default {
         specialValues: ["h-auto"]
     },
     bg: {
-        valueTypes: ["color3", "image", "special"],
+        valueTypes: ["color3", "image", "special", "opacity"],
         specialValues: ["bg-transparent"]
     },
     right: {
@@ -84,7 +84,7 @@ export default {
         valueTypes: ["special"]
     },
     border: {
-        valueTypes: ["color3", "border", "border-opacity"]
+        valueTypes: ["color3", "border", "opacity"]
     },
     z: {
         valueTypes: ["z"]
@@ -98,12 +98,36 @@ export default {
     },
     text: {
         valueTypes: ["color3", "text", "special"],
-        specialValues: ["capitalize", "uppercase", "lowercase"]
+        specialValues: ["text-center", "text-left", "text-right"]
+    },
+    capitalize: {
+        valueTypes: ["special"]
+    },
+    uppercase: {
+        valueTypes: ["special"]
+    },
+    lowercase: {
+        valueTypes: ["special"]
     },
     font: {
         valueTypes: ["font"],
     },
     aspect: {
         valueTypes: ["aspect"]
-    }
+    },
+    scale: {
+        valueTypes: ["scale"]
+    },
+    "max-w": {
+        valueTypes: ["max-w"]
+    },
+    "max-h": {
+        valueTypes: ["max-h"]
+    },
+    "min-w": {
+        valueTypes: ["min-w"]
+    },
+    "min-h": {
+        valueTypes: ["min-h"]
+    },
 }

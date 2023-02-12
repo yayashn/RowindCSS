@@ -6,11 +6,11 @@ import getClassValue from "../utils/getClassValue";
 export default withHooks(() => {
     const { classList } = useContext(ElementContext)
 
-    if(!getClassValue(classList, "aspect", "aspect")) return <Roact.Fragment/>
+    if(!getClassValue(classList, "scale", "scale")) return <Roact.Fragment/>
 
-    const imageProps = {
-        AspectRatio: getClassValue(classList, "aspect", "aspect") as number
+    const props = {
+        Scale: getClassValue(classList, "scale", "scale") as number || 1
     }
     
-    return <uiaspectratioconstraint {...imageProps}/>
+    return <uiscale {...props}/>
 })

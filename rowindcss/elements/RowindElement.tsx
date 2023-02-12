@@ -10,24 +10,29 @@ import Overflow from "../components/Overflow"
 import BgImage from "../components/BgImage"
 import { useEffect, useRef, useState, withHooks, withHookDetection } from "@rbxts/roact-hooked"
 import Aspect from "../components/Aspect"
+import Scale from "../components/Scale"
+import MinMaxSize from "../components/MinMaxSize"
 
 interface RowindProps extends Roact.PropsWithChildren<{}> {
-    tagName: "div" | "button" | "text",
+    tagName: "div" | "button" | "text" | "input",
     className?: string,
     Text?: string,
     Event?: Roact.JsxInstanceEvents<Frame> |
              Roact.JsxInstanceEvents<TextButton> |
-             Roact.JsxInstanceEvents<TextLabel> | undefined,
-    ref?: Roact.Ref<Frame | TextButton | TextLabel>
+             Roact.JsxInstanceEvents<TextLabel> | 
+             Roact.JsxInstanceEvents<TextBox> |
+             undefined,
+    ref?: Roact.Ref<Frame | TextButton | TextLabel | TextBox>,
+    placeholder?: string,
 }
 
 withHookDetection(Roact)
 
 export default (props: RowindProps) => {
     const classList = (props.className ?? "").split(" ") as ClassName[]
-    const [hovered, setHovered] = useState<Frame | TextButton | TextLabel | undefined>()
+    const [hovered, setHovered] = useState<Frame | TextButton | TextLabel | TextBox | undefined>()
     const elementProps = getElementProps([...classList, ((hovered ? "+hovered" : "-hovered") as unknown as ClassName)], props)
-    const elementRef = props.ref || useRef<Frame | TextButton | TextLabel>()
+    const elementRef = props.ref || useRef<Frame | TextButton | TextLabel | TextBox>()
 
     useEffect(() => {
         if(!elementRef.getValue()) return
@@ -56,13 +61,14 @@ export default (props: RowindProps) => {
                 {...elementProps}>
                     <Overflow>
                         <Padding/>
-                        <Flex/>
-                        <Rounded/>
-                        <Border/>         
-                        <Aspect/>  
+                        <Flex/>      
                         {props[Roact.Children]}             
                     </Overflow>
-                    <BgImage/>
+                    <Aspect/>
+                    <Scale/>
+                    <Border/>  
+                    <Rounded/> 
+                    <MinMaxSize/>
                 </frame>
             }
             {props.tagName === "button" &&
@@ -72,11 +78,12 @@ export default (props: RowindProps) => {
                     <Overflow>
                         <Padding/>
                         <Flex/>
-                        <Rounded/> 
-                        <Aspect/>  
                         {props[Roact.Children]}                  
                     </Overflow>
-                    <BgImage/>     
+                    <Scale/>
+                    <Aspect/>    
+                    <Rounded/>  
+                    <MinMaxSize/> 
                 </textbutton>
             }
             {props.tagName === "text" &&
@@ -86,12 +93,30 @@ export default (props: RowindProps) => {
                     <Overflow>
                         <Padding/>
                         <Flex/>
-                        <Rounded/>  
-                        <Aspect/>
                         {props[Roact.Children]}                   
                     </Overflow>
-                    <BgImage/>
+                    <Scale/>
+                    <Aspect/>
+                    <Rounded/>  
+                    <MinMaxSize/>
                 </textlabel>
+            }
+            {props.tagName === "input" &&
+                <textbox
+                PlaceholderText={props.placeholder}
+                Event={props.Event as Roact.JsxInstanceEvents<TextBox> || {}}
+                Ref={elementRef as Roact.Ref<TextBox>}
+                {...elementProps}>
+                    <Overflow>
+                        <Padding/>
+                        <Flex/>
+                        {props[Roact.Children]}                   
+                    </Overflow>
+                    <Scale/>
+                    <Aspect/>
+                    <Rounded/>  
+                    <MinMaxSize/>
+                </textbox>
             }
         </ElementContext.Provider>
     )

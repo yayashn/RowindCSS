@@ -13,7 +13,7 @@ export default withHooks(() => {
 
     const borderProps = {
         Thickness: getClassValue(classList, "border", "border") as number || 0,
-        Transparency: getClassValue(classList, "border", "border-opacity") as number || 0,
+        Transparency: getClassValue(classList, "border", "opacity") as number || 0,
         Color: getClassValue(classList, "border", "color3") as Color3 || new Color3(0, 0, 0),
         LineJoinMode: hasRounded ? Enum.LineJoinMode.Round : Enum.LineJoinMode.Miter,
     }

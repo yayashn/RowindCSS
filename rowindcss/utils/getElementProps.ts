@@ -3,7 +3,7 @@ import { ClassList } from "../types"
 import getClassValue from "./getClassValue"
 
 interface RowindProps extends Roact.PropsWithChildren<{}> {
-    tagName: "div" | "button" | "text",
+    tagName: "div" | "button" | "text" | "input",
     className?: string,
     Text?: string,
     Events?: Roact.JsxInstanceEvents<Frame> |
@@ -18,12 +18,13 @@ export default (classList: ClassList, props: RowindProps) => {
     const hasHAuto = getClassValue(classList, "h", "special") === "h-auto"
     const hasOverflowHidden = getClassValue(classList, "overflow") === "overflow-hidden"
     const hasBgColor = getClassValue(classList, "bg", "color3") !== false
+    const hasBgOpacity = getClassValue(classList, "bg", "opacity") !== false
 
     let elementProps = {
         Size: new UDim2(getClassValue(classList, "w", "udim") as UDim || new UDim(0,40), 
                         getClassValue(classList, "h", "udim") as UDim || new UDim(0,40)),
         BackgroundColor3: getClassValue(classList, "bg", "color3") as Color3 || new Color3(0,0,0),
-        BackgroundTransparency: hasBgColor ? 0 : 1,
+        BackgroundTransparency: hasBgOpacity ? getClassValue(classList, "bg", "opacity") as number : hasBgColor ? 0 : 1,
         Position: new UDim2(getClassValue(classList, "left") as UDim || new UDim(0,0),
                             getClassValue(classList, "top") as UDim || new UDim(0,0)),
         AnchorPoint: getClassValue(classList, "origin") as Vector2 || new Vector2(0,0),
@@ -37,12 +38,14 @@ export default (classList: ClassList, props: RowindProps) => {
         BorderSizePixel: 0,
     }
 
-    const hasCapitalize = getClassValue(classList, "text", "special") === "capitalize"
-    const hasLowercase = getClassValue(classList, "text", "special") === "lowercase"
-    const hasUppercase = getClassValue(classList, "text", "special") === "uppercase"
+    const hasCapitalize = getClassValue(classList, "capitalize", "special") === "capitalize"
+    const hasLowercase = getClassValue(classList, "lowercase", "special") === "lowercase"
+    const hasUppercase = getClassValue(classList, "uppercase", "special") === "uppercase"
     const fontWeightVal = getClassValue(classList, "font", "font-weight") as Enum.FontWeight || Enum.FontWeight.Regular
+    const hasTextCenter = getClassValue(classList, "text", "special") === "text-center"
+    const hasTextRight = getClassValue(classList, "text", "special") === "text-right"
 
-    if(props.tagName === "text" || props.tagName === "button") {
+    if(props.tagName === "text" || props.tagName === "button" || props.tagName === "input") {
         (elementProps as unknown) = {...elementProps,
             BorderSizePixel: getClassValue(classList, "border", "border") as number || 0,
             BorderColor3: getClassValue(classList, "border", "color3") as Color3 || new Color3(0, 0, 0),
@@ -56,7 +59,15 @@ export default (classList: ClassList, props: RowindProps) => {
             : hasLowercase ? props.Text!.lower()
             : hasUppercase ? props.Text!.upper()
             : props.Text,
-            Events: props.Events
+            Events: props.Events,
+            TextScaled: getClassValue(classList, "text", "text") === false,
+            TextXAlignment: hasTextCenter ? Enum.TextXAlignment.Center : hasTextRight ? Enum.TextXAlignment.Right : Enum.TextXAlignment.Left,
+        }
+    }
+
+    if(props.tagName === "input") {
+        (elementProps as unknown) = {...elementProps, 
+           PlaceholderColor3: getClassValue(classList, "text", "color3") as Color3 || new Color3(0, 0, 0)
         }
     }
 

@@ -1,19 +1,22 @@
 import classes from "../classes"
-import { BorderValueName, ClassList, ClassName, ClassType, ClassValueName, ClassValueType, RoundedValueName, Color3ValueName, UDimValueName, Vector2ValueName, ZValueName, BorderOpacityValueName, LeadingValueName, TextValueName, FontWeightValueName, AspectValueName } from "../types"
+import { BorderValueName, ClassList, ClassName, ClassType, ClassValueName, ClassValueType, RoundedValueName, Color3ValueName, UDimValueName, Vector2ValueName, ZValueName, OpacityValueName, LeadingValueName, TextValueName, FontWeightValueName, AspectValueName, ScaleValueName,
+MinHValueName, MinWValueName, MaxHValueName, MaxWValueName } from "../types"
 import values from "../values/values"
 import Object from "@rbxts/object-utils"
+import startsWith from "./startsWith"
 
 const parseValue = (class_ : ClassName, classType: ClassType, specialClassValues: ClassName[], valueType: ClassValueType) => {
     if(classType === (class_ as unknown) || (valueType === "special" && (specialClassValues.some(s => s === class_)))) {
         return class_
-    } else if(class_.match(`^${classType}%-`).size() > 0) {
+    } else if(startsWith(class_, `${classType}-`)) {
         let classValueString = class_.split(`${classType}-`)[1] as ClassValueName
         const isUDim = valueType === "udim"
         const isColor3 = valueType === "color3"
+        const isRounded = valueType === "rounded"
 
         if(classValueString.match("%[").size() > 0) {
             const classArbitraryValue = classValueString.sub(1,-2).sub(2)
-            if(isUDim) {
+            if(isUDim || isRounded) {
                 if(classArbitraryValue.match("px").size() > 0) {
                     return new UDim(0, tonumber(classArbitraryValue.sub(1,-3)))
                 } else if(classArbitraryValue.match("%%").size() > 0) {
@@ -56,8 +59,8 @@ const parseValue = (class_ : ClassName, classType: ClassType, specialClassValues
             const isRounded = valueType === 'rounded'
                         && Object.keys(values.rounded).some(u => u === classValueString)
 
-            const isBorderOpacity = valueType === 'border-opacity'
-                        && Object.keys(values.borderOpacity).some(u => u === classValueString)
+            const isOpacity = valueType === 'opacity'
+                        && Object.keys(values.opacity).some(u => u === classValueString)
             
             const isLeading = valueType === 'leading'
                         && Object.keys(values.leading).some(u => u === classValueString)
@@ -70,6 +73,21 @@ const parseValue = (class_ : ClassName, classType: ClassType, specialClassValues
             
             const isAspect = valueType === 'aspect'
                         && Object.keys(values.aspect).some(u => u === classValueString)
+
+            const isScale = valueType === 'scale'
+                        && Object.keys(values.scale).some(u => u === classValueString)
+
+            const isMinH = valueType === 'min-h'
+                        && Object.keys(values.minH).some(u => u === classValueString)
+
+            const isMinW = valueType === 'min-w'
+                        && Object.keys(values.minW).some(u => u === classValueString)
+
+            const isMaxH = valueType === 'max-h'
+                        && Object.keys(values.maxH).some(u => u === classValueString)
+            
+            const isMaxW = valueType === 'max-w'
+                        && Object.keys(values.maxW).some(u => u === classValueString)
 
 
             if(hasUDim) {
@@ -84,8 +102,8 @@ const parseValue = (class_ : ClassName, classType: ClassType, specialClassValues
                 return values.border[classValueString as BorderValueName]
             } else if (isRounded) {
                 return values.rounded[classValueString as RoundedValueName]
-            } else if (isBorderOpacity) {
-                return values.borderOpacity[classValueString as BorderOpacityValueName]
+            } else if (isOpacity) {
+                return values.opacity[classValueString as OpacityValueName]
             } else if(isLeading) {
                 return values.leading[classValueString as LeadingValueName]
             } else if(isText) {
@@ -94,6 +112,16 @@ const parseValue = (class_ : ClassName, classType: ClassType, specialClassValues
                 return values.fontWeight[classValueString as FontWeightValueName]
             } else if(isAspect) {
                 return values.aspect[classValueString as AspectValueName]
+            } else if(isScale) {
+                return values.scale[classValueString as ScaleValueName]
+            } else if(isMinH) {
+                return values.minH[classValueString as MinHValueName]
+            } else if(isMinW) {
+                return values.minW[classValueString as MinWValueName]
+            } else if(isMaxH) {
+                return values.maxH[classValueString as MaxHValueName]
+            } else if(isMaxW) {
+                return values.maxW[classValueString as MaxWValueName]
             }
         }
     }
