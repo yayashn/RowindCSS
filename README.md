@@ -70,6 +70,8 @@ Currently supported Tailwind classes:
 Experimental:
 - Overflow (overflow-x, overflow-y)
 
+You can find a more comprehensive list of supported classes and examples in CLASSES.md.
+
 ## FAQ
 How to attach references?
 You can use the 'ref' property of any Rowind component.
